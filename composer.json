@@ -1,0 +1,31 @@
+{
+    "name": "bauhaus/message-bus",
+    "description": "Yet another message bus implementation",
+    "keywords": [
+        "bauhaus",
+        "message bus"
+    ],
+
+    "type": "library",
+    "license": "MIT",
+
+    "autoload": {
+        "psr-4": {
+            "Bauhaus\\": "src/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "Bauhaus\\": "tests/"
+        }
+    },
+
+    "require": {
+        "php": "^8.0"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
