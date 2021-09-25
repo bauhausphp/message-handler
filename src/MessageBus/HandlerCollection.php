@@ -1,6 +1,8 @@
 <?php
 
-namespace Bauhaus\MessageBus\Handler;
+namespace Bauhaus\MessageBus;
+
+use Bauhaus\MessageBus\Handler\Handler;
 
 /**
  * @internal

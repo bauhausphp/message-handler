@@ -2,8 +2,8 @@
 
 namespace Bauhaus;
 
-use Bauhaus\MessageBus\Handler\HandlerCollection;
-use Bauhaus\MessageBus\Handler\HandlerCollectionFactory;
+use Bauhaus\MessageBus\HandlerCollection;
+use Bauhaus\MessageBus\HandlerCollectionFactory;
 
 class MessageBus
 {
