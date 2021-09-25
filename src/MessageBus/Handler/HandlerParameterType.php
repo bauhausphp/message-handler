@@ -24,7 +24,11 @@ class HandlerParameterType
             throw new InvalidHandlerProvided();
         }
 
-        $this->handlerParameter = $rMethod->getParameters()[0]; // TODO check if there is only one parameter
+        if ($rMethod->getNumberOfParameters() !== 1) {
+            throw new InvalidHandlerProvided();
+        }
+
+        $this->handlerParameter = $rMethod->getParameters()[0];
     }
 
     public function match(object $incomingMessage): string
