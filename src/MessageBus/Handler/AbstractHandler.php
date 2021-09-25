@@ -20,9 +20,9 @@ abstract class AbstractHandler implements Handler
         return $this->handlerParameterType->match($incomingMessage);
     }
 
-    public function execute(object $message): void
+    public function execute(object $message): ?object
     {
-        ($this->loadHandler())($message);
+        return ($this->loadHandler())($message);
     }
 
     abstract protected function loadHandler(): object;

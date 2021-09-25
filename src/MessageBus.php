@@ -17,9 +17,9 @@ class MessageBus
         return new self(HandlerCollectionFactory::build($settings));
     }
 
-    public function dispatch(object $message): void
+    public function dispatch(object $message): ?object
     {
-        $this->handlers
+        return $this->handlers
             ->findHandlerByMessage($message)
             ->execute($message);
     }

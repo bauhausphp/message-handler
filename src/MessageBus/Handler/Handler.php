@@ -8,5 +8,5 @@ namespace Bauhaus\MessageBus\Handler;
 interface Handler
 {
     public function support(object $incomingMessage): bool;
-    public function execute(object $incomingMessage): void;
+    public function execute(object $incomingMessage): ?object;
 }
