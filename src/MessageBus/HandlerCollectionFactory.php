@@ -2,7 +2,7 @@
 
 namespace Bauhaus\MessageBus;
 
-use Bauhaus\MessageBus\Handler\ForwardingHandler;
+use Bauhaus\MessageBus\Handler\SimpleHandler;
 use Bauhaus\MessageBus\Handler\Handler;
 use Bauhaus\MessageBus\Handler\LazyHandler;
 use Bauhaus\MessageBusSettings;
@@ -38,7 +38,7 @@ class HandlerCollectionFactory
     private function createHandler(object|string $actualHandler): Handler
     {
         return match (is_object($actualHandler)) {
-            true => new ForwardingHandler($actualHandler),
+            true => new SimpleHandler($actualHandler),
             false => new LazyHandler($this->settings->psrContainer(), $actualHandler),
         };
     }

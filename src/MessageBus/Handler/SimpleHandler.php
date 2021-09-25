@@ -5,7 +5,7 @@ namespace Bauhaus\MessageBus\Handler;
 /**
  * @internal
  */
-class ForwardingHandler extends AbstractHandler
+class SimpleHandler extends AbstractHandler
 {
     public function __construct(
         private object $actualHandler

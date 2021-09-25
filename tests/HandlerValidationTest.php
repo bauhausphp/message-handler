@@ -9,7 +9,7 @@ use Bauhaus\Doubles\HandlerWithNoParameter;
 use Bauhaus\MessageBus\Handler\InvalidHandlerProvided;
 use PHPUnit\Framework\TestCase;
 
-class ValidationTest extends TestCase
+class HandlerValidationTest extends TestCase
 {
     public function notCallableHandlers(): array
     {
