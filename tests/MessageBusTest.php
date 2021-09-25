@@ -2,6 +2,7 @@
 
 namespace Bauhaus;
 
+use Bauhaus\Doubles\FakePsrContainer;
 use Bauhaus\Doubles\HandlerForMessageA;
 use Bauhaus\Doubles\HandlerForMessageB;
 use Bauhaus\Doubles\HandlerForMessageC;
@@ -21,10 +22,14 @@ class MessageBusTest extends TestCase
         $this->handlerSpy = new HandlerSpy();
 
         $settings = MessageBusSettings::new()
+            ->withPsrContainer(new FakePsrContainer([
+                HandlerForMessageB::class => new HandlerForMessageB($this->handlerSpy),
+                HandlerForMessageC::class => new HandlerForMessageC($this->handlerSpy),
+            ]))
             ->withHandlers(
                 new HandlerForMessageA($this->handlerSpy),
-                new HandlerForMessageB($this->handlerSpy),
-                new HandlerForMessageC($this->handlerSpy),
+                HandlerForMessageB::class,
+                HandlerForMessageC::class,
             );
 
         $this->bus = MessageBus::build($settings);
