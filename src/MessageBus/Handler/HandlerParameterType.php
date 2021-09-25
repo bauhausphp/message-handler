@@ -2,33 +2,36 @@
 
 namespace Bauhaus\MessageBus\Handler;
 
-use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionParameter;
 
 /**
  * @internal
  */
 class HandlerParameterType
 {
+    private const TARGET_METHOD = '__invoke';
+
+    private ReflectionParameter $handlerParameter;
+
     public function __construct(
         private object|string $handler,
     ) {
+        try {
+            $rMethod = new ReflectionMethod($this->handler, self::TARGET_METHOD);
+        } catch (ReflectionException) {
+            throw new InvalidHandlerProvided();
+        }
+
+        $this->handlerParameter = $rMethod->getParameters()[0]; // TODO check if there is only one parameter
     }
 
     public function match(object $incomingMessage): string
     {
-        $supportedType = $this->extractParameterType();
+        $supportedType = $this->handlerParameter->getType()->getName();
         $incomingType = get_class($incomingMessage) ;
 
         return $incomingType === $supportedType;
-    }
-
-    private function extractParameterType(): string
-    {
-        $rClass = new ReflectionClass($this->handler);
-        $rParam = $rClass->getMethod('__invoke')->getParameters()[0];
-
-        // TODO check if there is only on parameter
-
-        return $rParam->getType()->getName();
     }
 }

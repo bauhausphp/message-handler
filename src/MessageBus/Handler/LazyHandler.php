@@ -9,22 +9,23 @@ use Psr\Container\ContainerInterface as PsrContainer;
  */
 class LazyHandler implements Handler
 {
+    private HandlerParameterType $handlerParameterType;
+
     public function __construct(
         private PsrContainer $container,
-        private string $handlerId,
+        private string $handlerClassName,
     ) {
+        $this->handlerParameterType = new HandlerParameterType($this->handlerClassName);
     }
 
     public function support(object $incomingMessage): bool
     {
-        $handlerParameterType = new HandlerParameterType($this->handlerId);
-
-        return $handlerParameterType->match($incomingMessage);
+        return $this->handlerParameterType->match($incomingMessage);
     }
 
     public function execute(object $message): void
     {
-        $handler = $this->container->get($this->handlerId);
+        $handler = $this->container->get($this->handlerClassName);
 
         $handler($message);
     }

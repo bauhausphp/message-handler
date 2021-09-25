@@ -7,16 +7,17 @@ namespace Bauhaus\MessageBus\Handler;
  */
 class ForwardingHandler implements Handler
 {
+    private HandlerParameterType $handlerParameterType;
+
     public function __construct(
         private object $actualHandler
     ) {
+        $this->handlerParameterType = new HandlerParameterType($this->actualHandler);
     }
 
     public function support(object $incomingMessage): bool
     {
-        $handlerParameterType = new HandlerParameterType($this->actualHandler);
-
-        return $handlerParameterType->match($incomingMessage);
+        return $this->handlerParameterType->match($incomingMessage);
     }
 
     public function execute(object $message): void
