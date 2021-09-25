@@ -7,26 +7,17 @@ use Psr\Container\ContainerInterface as PsrContainer;
 /**
  * @internal
  */
-class LazyHandler implements Handler
+class LazyHandler extends AbstractHandler
 {
-    private HandlerParameterType $handlerParameterType;
-
     public function __construct(
         private PsrContainer $container,
         private string $handlerClassName,
     ) {
-        $this->handlerParameterType = new HandlerParameterType($this->handlerClassName);
+        parent::__construct($this->handlerClassName);
     }
 
-    public function support(object $incomingMessage): bool
+    protected function loadHandler(): object
     {
-        return $this->handlerParameterType->match($incomingMessage);
-    }
-
-    public function execute(object $message): void
-    {
-        $handler = $this->container->get($this->handlerClassName);
-
-        $handler($message);
+        return $this->container->get($this->handlerClassName);
     }
 }

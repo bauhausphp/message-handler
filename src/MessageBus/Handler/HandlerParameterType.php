@@ -34,7 +34,7 @@ class HandlerParameterType
     public function match(object $incomingMessage): string
     {
         $supportedType = $this->handlerParameter->getType()->getName();
-        $incomingType = get_class($incomingMessage) ;
+        $incomingType = get_class($incomingMessage);
 
         return $incomingType === $supportedType;
     }

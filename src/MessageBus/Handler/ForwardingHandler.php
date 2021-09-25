@@ -5,23 +5,16 @@ namespace Bauhaus\MessageBus\Handler;
 /**
  * @internal
  */
-class ForwardingHandler implements Handler
+class ForwardingHandler extends AbstractHandler
 {
-    private HandlerParameterType $handlerParameterType;
-
     public function __construct(
         private object $actualHandler
     ) {
-        $this->handlerParameterType = new HandlerParameterType($this->actualHandler);
+        parent::__construct($this->actualHandler);
     }
 
-    public function support(object $incomingMessage): bool
+    protected function loadHandler(): object
     {
-        return $this->handlerParameterType->match($incomingMessage);
-    }
-
-    public function execute(object $message): void
-    {
-        ($this->actualHandler)($message);
+        return $this->actualHandler;
     }
 }
