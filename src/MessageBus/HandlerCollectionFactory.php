@@ -31,7 +31,7 @@ class HandlerCollectionFactory
     {
         return array_map(
             fn (object|string $h): Handler => $this->createHandler($h),
-            $this->settings->handlers(),
+            $this->settings->handlers,
         );
     }
 
@@ -39,7 +39,7 @@ class HandlerCollectionFactory
     {
         return match (is_object($actualHandler)) {
             true => new SimpleHandler($actualHandler),
-            false => new LazyHandler($this->settings->psrContainer(), $actualHandler),
+            false => new LazyHandler($this->settings->psrContainer, $actualHandler),
         };
     }
 }

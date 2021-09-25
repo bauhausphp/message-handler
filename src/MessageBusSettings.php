@@ -7,8 +7,8 @@ use Psr\Container\ContainerInterface as PsrContainer;
 class MessageBusSettings
 {
     private function __construct(
-        private ?PsrContainer $container,
-        /** @var string[]|object[] */ private array $handlers,
+        public readonly ?PsrContainer $psrContainer,
+        /** @var string[]|object[] */ public readonly array $handlers,
     ) {
     }
 
@@ -17,26 +17,13 @@ class MessageBusSettings
         return new self(null, []);
     }
 
-    public function withPsrContainer(PsrContainer $container): self
+    public function withPsrContainer(PsrContainer $psrContainer): self
     {
-        return new self($container, $this->handlers);
+        return new self($psrContainer, $this->handlers);
     }
 
     public function withHandlers(string|object ...$handlers): self
     {
-        return new self($this->container, $handlers);
-    }
-
-    public function psrContainer(): PsrContainer
-    {
-        return $this->container;
-    }
-
-    /**
-     * @return string[]|object[]
-     */
-    public function handlers(): array
-    {
-        return $this->handlers;
+        return new self($this->psrContainer, $handlers);
     }
 }
